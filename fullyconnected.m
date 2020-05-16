@@ -68,7 +68,6 @@ classdef fullyconnected < handle
 
     ## Propagación hacia atrás recibe dL/ds de siguientes nodos
     function backward(s,dLds)
-
       if (columns(dLds)==1)
         s.gradientW = dLds*s.inputsX';
         s.gradientX = s.inputsW'*dLds;

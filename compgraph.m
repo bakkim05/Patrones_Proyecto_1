@@ -5,7 +5,6 @@
 ## Escuela de Ingeniería Electrónica
 ## Tecnológico de Costa Rica
 
-1;
 
 ## Capas:
 l1a=fullyconnected();
@@ -15,22 +14,25 @@ l2b=sigmoide();
 
 ## Forward prop
 
-[x,ytrain]=create_data(4,3,"radial");
-x=x(:,1)
-x=[1 x']'
+x=[1 2 3 4]';
 W1=[0.1 0.3 -0.1 0;-0.2 0.5 0.2 0.1; 1 0 0.1 -0.3; 0.5 0.6 0.8 -0.9];
 W2=[0.1 -0.1 0.2 0.3;-0.4 -0.5 0.1 0.2];
+yt = [5 6]';
 
 y1a=l1a.forward(W1,x);
 y1b=l1b.forward(y1a);
 y2a=l2a.forward(W2,y1b);
 y2b=l2b.forward(y2a);
+## FALTA calcular ||y2b-ytrain||^2
 
-## FALTA calcular ||y2b-ytn||^2
+J = mse();
+error = J.error(y2b,yt)
+gradJ = J.gradient
+
 
 ## Backprop.
 
-l2b.backward([1 1]'); # asumiendo que esto es el final
+l2b.backward(gradJ) # asumiendo que esto es el final
 l2a.backward(l2b.gradient);
 l1b.backward(l2a.gradientX);
 l1a.backward(l1b.gradient);

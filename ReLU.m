@@ -25,6 +25,7 @@ classdef ReLU < handle
 
     ## Propagación hacia atrás recibe dL/ds de siguientes nodos
     function backward(s,dLds)
+      pkg load specfun
       if (size(dLds)!=size(s.outputs))
         error("backward de sigmoide no compatible con forward previo");
       endif

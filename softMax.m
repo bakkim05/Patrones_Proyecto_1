@@ -22,22 +22,13 @@ classdef softMax < handle
       s.gradient = [];
     endfunction
 
-##    ## Propagación hacia atrás recibe dL/ds de siguientes nodos
-##    function backward(s,dLds)
-##      if (size(dLds)!=size(s.outputs))
-##        error("backward de sigmoide no compatible con forward previo");
-##      endif
-##      localGrad = s.outputs.*(1-s.outputs);
-##      s.gradient = localGrad.*dLds;
-##    endfunction
-    
-    
     function backward(s,dLds)
       if (size(dLds) != size(s.outputs))
         error("backward de softMax no compatible con forward previo");
       endif
-      localGrad = diag(s.outputs) - (s.outputs.*(s.outputs)');
-      s.gradient = localGrad.*dLds;
+      #localGrad = diag(s.outputs) - (s.outputs.*(s.outputs)');
+      localGrad = s.outputs.*dLds-s.outputs*(s.outputs'*dLds);
+      s.gradient = localGrad;
     endfunction
   endmethods
 endclassdef

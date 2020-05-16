@@ -4,8 +4,8 @@
 ## EL5852 Introducción al Reconocimiento de Patrones
 ## Escuela de Ingeniería Electrónica
 ## Tecnológico de Costa Rica
-1;
-pkg load specfun;
+
+
 ## Capas:
 l1a=fullyconnected();
 l1b=sigmoide();
@@ -17,29 +17,32 @@ l3a=fullyconnected();
 l3b=ReLU();
 
 l4a=fullyconnected();
-l4b=sigmoide();
+l4b=softMax();
 
 
 ## Forward prop
 
 x=[1 2 3 4]';
-W1=[0.1 0.3 -0.1 0;-0.2 0.5 0.2 0.1; 1 0 0.1 -0.3; 0.5 0.6 0.8 -0.9];
-W2=[0.1 -0.1 0.2 0.3;-0.4 -0.5 0.1 0.2; 0.1 -0.1 0.2 0.3];
-W3=[0.1 -0.1 0.2 ;-0.4 -0.5 0.1; 0.1 -0.1 0.2];
-W4=[0.1 -0.1 0.2;-0.4 -0.5 0.1; 0.1 -0.1 0.2];
-yt = [5 6 3]';
+W1=[0.1  0.3 -0.1 0;-0.2 0.5 0.2 0.1; 1 0 0.1 -0.3; 0.5 0.6 0.8 -0.9];
+W2=[0.1  0.3 -0.1 0;-0.2 0.5 0.2 0.1; 1 0 0.1 -0.3; 0.5 0.6 0.8 -0.9;  0.5 0.6 0.8 -0.9];
+W3=[0.1  0.3 -0.1 0 2;-0.2 0.5 0.2 1 3;0 0.1 -0.3 0 1];
+W4=[0.1  0.3 -0.1;-0.2 0.5 0.2 ;0 0.1 -0.3];
+yt = [5 6 7]';
 
-y1a=l1a.forward(W1,x)
+y1a=l1a.forward(W1,x);
 y1b=l1b.forward(y1a);
-y2a=l2a.forward(W2,y1b)
+
+y2a=l2a.forward(W2,y1b);
 y2b=l2b.forward(y2a);
+
 y3a=l3a.forward(W3,y2b);
 y3b=l3b.forward(y3a);
+
 y4a=l4a.forward(W4,y3b);
 y4b=l4b.forward(y4a);
 
 
-J = mse();
+J = xent();
 error = J.error(y4b,yt);
 gradJ = J.gradient;
 
@@ -56,8 +59,7 @@ l2a.backward(l2b.gradient);
 l1b.backward(l2a.gradientX);
 l1a.backward(l1b.gradient);
 
-l1a.gradientW
-l1a.gradientX
+
 
 alpha = 0.05; ################################
 W1 = W1 + alpha*l1a.gradientW;

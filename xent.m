@@ -14,7 +14,7 @@ classdef xent < handle
     endfunction
 
     function y=error(s,pnet,ytrain)
-      s.outputs = -(ytrain)'.*log(pnet);
+      s.outputs = -ytrain'*log(pnet);
       y=s.outputs;
       s.gradient = pnet-ytrain;
     endfunction
