@@ -15,7 +15,9 @@ l2b=sigmoide();
 
 ## Forward prop
 
-x=[1 2 3 4]';
+[x,ytrain]=create_data(4,3,"radial");
+x=x(:,1)
+x=[1 x']'
 W1=[0.1 0.3 -0.1 0;-0.2 0.5 0.2 0.1; 1 0 0.1 -0.3; 0.5 0.6 0.8 -0.9];
 W2=[0.1 -0.1 0.2 0.3;-0.4 -0.5 0.1 0.2];
 
@@ -24,7 +26,7 @@ y1b=l1b.forward(y1a);
 y2a=l2a.forward(W2,y1b);
 y2b=l2b.forward(y2a);
 
-## FALTA calcular ||y2b-ytrain||^2
+## FALTA calcular ||y2b-ytn||^2
 
 ## Backprop.
 
