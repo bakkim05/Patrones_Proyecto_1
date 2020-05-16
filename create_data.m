@@ -29,6 +29,7 @@
 ##      (no 1 prepended).  Its size is numSamples x 2
 ##   Y: Corresponding class to each training sample.  Its size is
 ##      numSamples x numClasses
+
 function [X,Y]=create_data(numSamples,numClasses=3,shape="radial")
 
   switch(shape)
