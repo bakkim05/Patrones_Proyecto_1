@@ -1,5 +1,4 @@
 #!/usr/bin/octave-cli
-pkg load symbolic
 ## "Capa" softMax, que aplica la función logística
 classdef softMax < handle
   properties    
@@ -23,26 +22,22 @@ classdef softMax < handle
       s.gradient = [];
     endfunction
 
-    ## Propagación hacia atrás recibe dL/ds de siguientes nodos
-    function backward(s,dLds)
-      if (size(dLds)!=size(s.outputs))
-        error("backward de sigmoide no compatible con forward previo");
-      endif
-      localGrad = s.outputs.*(1-s.outputs);
-      s.gradient = localGrad.*dLds;
-    endfunction
+##    ## Propagación hacia atrás recibe dL/ds de siguientes nodos
+##    function backward(s,dLds)
+##      if (size(dLds)!=size(s.outputs))
+##        error("backward de sigmoide no compatible con forward previo");
+##      endif
+##      localGrad = s.outputs.*(1-s.outputs);
+##      s.gradient = localGrad.*dLds;
+##    endfunction
     
     
     function backward(s,dLds)
       if (size(dLds) != size(s.outputs))
         error("backward de softMax no compatible con forward previo");
       endif
-      localGrad = s.outputs.*(kroneckerdelta(i,j)-s.outputs)
+      localGrad = diag(s.outputs) - (s.outputs.*(s.outputs)');
       s.gradient = localGrad.*dLds;
     endfunction
-    
-    
-    
-    
   endmethods
 endclassdef
