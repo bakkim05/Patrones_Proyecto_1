@@ -1,13 +1,17 @@
 ## Copyright (C) 2020 Pablo Alvarado
 ##
 ## Este archivo forma parte del material del curso:
-## EL5852 IntroducciÃ³n al Reconocimiento de Patrones
-## Escuela de IngenierÃ­a ElectrÃ³nica
-## TecnolÃ³gico de Costa Rica
+## EL5852 Introducción al Reconocimiento de Patrones
+## Escuela de Ingeniería Electrónica
+## Tecnológico de Costa Rica
+
+n=10;
+nw1 = 5;
+nw2 = 10;
+nw3 = 10;
 
 
-
-[X,Y] = create_data(4,3, "vertical");
+[X,Y] = create_data(n,3, "vertical");
 
 ## Capas:
 l1a=fullyconnected();
@@ -21,20 +25,23 @@ l3b=ReLU();
 
 l4a=fullyconnected();
 l4b=softMax();
+#l4b=sigmoide();
 
 
 ## Forward prop
 
-x  = X(:,1);
+yt = Y(1,1:3)';
+#yt = [Y(1:2,1); Y(1:2,2); Y(1:2,3)];
+x  = [X(:)];
 x  = [1; x];
-W1 = [0.1  0.3 -0.1 0 1;-0.2 0.5 0.2 0.1 1; 1 0 0.1 -0.3 1; 0.5 0.6 0.8 -0.9 1];
-W2 = [0.1  0.3 -0.1 0 1;-0.2 0.5 0.2 0.1 1; 1 0 0.1 -0.3 1; 0.5 0.6 0.8 -0.9 1];
-W3 = [0.1  0.3 -0.1 0 1;-0.2 0.5 0.2 0.1 1; 1 0 0.1 -0.3 1];
-W4 = [0.1  0.3 -0.1 1;-0.2 0.5 0.2 1;0 0.1 -0.3 1];
-yt = Y(1:3,2);
+W1 = rand(rows(x),nw1)';
+W2 = rand(w12+1,nw2)';
+W3 = rand(w23+1,nw3)';
+W4 = rand(w34+1,rows(yt))';
+
 
 counter =0;
-while counter < 1500
+while counter < 1000
 y1a=l1a.forward(W1,x);
 y1b=l1b.forward(y1a);
 y1b=[1;y1b];
@@ -48,6 +55,7 @@ y4a=l4a.forward(W4,y3b);
 y4b=l4b.forward(y4a);
 
 J = xent();
+#J = mse();
 error = J.error(y4b,yt);
 gradJ = J.gradient;
 
@@ -76,5 +84,9 @@ counter
 end
 y4b
 yt
+
+
+
+
 
 
