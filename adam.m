@@ -25,7 +25,7 @@ classdef adam < handle
     endfunction
     
     function f = theta(alfa)  #falta implementar esta funcion correctamente.
-      w.weight = w.weight - alfa /
+      #w.weight = w.weight - alfa /
     endfunction
     
     function h = compute(alfa, gradiente, beta1 = 0.9, beta2 = 0.99)
