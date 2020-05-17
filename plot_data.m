@@ -24,7 +24,7 @@
 ##       "darker": by a darker color
 ##       "complementary": by the complementary color
 function plot_data(X,Y,mono=[])
-
+  
   ## Set all the non-zero entries with the corresponding index
   idx=ones(rows(Y),1)*[1:columns(Y)];
   idx.*=Y;

@@ -4,7 +4,8 @@
 ## EL5852 Introducción al Reconocimiento de Patrones
 ## Escuela de Ingeniería Electrónica
 ## Tecnológico de Costa Rica
-
+pkg load statistics;
+pkg load specfun;
 n=10; #muestras
 nw1 = 5; #peso capa 1
 nw2 = 10;#peso capa 2
@@ -25,7 +26,7 @@ l3a=fullyconnected();
 l3b=ReLU();
 
 l4a=fullyconnected();
-l4b=softMax();
+l4b=sigmoide();
 #l4b=sigmoide();
 
 
@@ -55,7 +56,7 @@ y3b=[1;y3b];
 y4a=l4a.forward(W4,y3b);
 y4b=l4b.forward(y4a);
 
-J = xent();
+J = mse();
 #J = mse();
 error = J.error(y4b,yt);
 gradJ = J.gradient;
