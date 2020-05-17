@@ -24,7 +24,7 @@ classdef adam < handle
       f = w.sdW;
     endfunction
     
-    function f = theta(alfa)  #falta implementar esta funcion correctamente
+    function f = theta(alfa)  #falta implementar esta funcion correctamente.
       w.weight = w.weight - alfa /
     endfunction
     
