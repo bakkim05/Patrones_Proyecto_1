@@ -5,13 +5,14 @@
 ## Escuela de Ingeniería Electrónica
 ## Tecnológico de Costa Rica
 
-n=10;
-nw1 = 5;
-nw2 = 10;
-nw3 = 10;
+n=10; #muestras
+nw1 = 5; #peso capa 1
+nw2 = 10;#peso capa 2
+nw3 = 10;#peso capa 3
+c=10; #clases
 
 
-[X,Y] = create_data(n,3, "vertical");
+[X,Y] = create_data(n,c, "vertical");
 
 ## Capas:
 l1a=fullyconnected();
@@ -30,14 +31,14 @@ l4b=softMax();
 
 ## Forward prop
 
-yt = Y(1,1:3)';
+yt = Y(1,1:c)';
 #yt = [Y(1:2,1); Y(1:2,2); Y(1:2,3)];
 x  = [X(:)];
 x  = [1; x];
-W1 = rand(rows(x),nw1)';
-W2 = rand(w12+1,nw2)';
-W3 = rand(w23+1,nw3)';
-W4 = rand(w34+1,rows(yt))';
+W1 = w_gen(rows(x),nw1)';
+W2 = w_gen(nw1+1,nw2)';
+W3 = w_gen(nw2+1,nw3)';
+W4 = w_gen(nw3+1,c)';
 
 
 counter =0;
