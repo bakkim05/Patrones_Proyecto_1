@@ -6,11 +6,11 @@
 ## Tecnológico de Costa Rica
 pkg load statistics;
 pkg load specfun;
-n=10; #muestras
+n=3; #muestras
 nw1 = 5; #peso capa 1
 nw2 = 10;#peso capa 2
 nw3 = 10;#peso capa 3
-c=10; #clases
+c=2; #clases
 
 
 [X,Y] = create_data(n,c, "vertical");

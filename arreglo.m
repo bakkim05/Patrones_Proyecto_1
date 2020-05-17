@@ -8,7 +8,12 @@
 1;
 pkg load specfun;
 pkg load statistics;
-[X,Y] = create_data(3,2, "vertical")
+n=10; #muestras
+nw1 = 5; #peso capa 1
+nw2 = 10;#peso capa 2
+nw3 = 10;#peso capa 3
+c=4; #clases
+[X,Y] = create_data(n,c, "vertical");
 
 ## Capas:
 l1a=fullyconnected();
@@ -23,10 +28,10 @@ l4b=sigmoide();
 ## Forward prop
 x  = X;
 #x  = [1 x]';
-W1 = [0.1  0.3 ;-0.2 0.5 ; 1 0 ; 0.5 0.6 ];
-W2 = [0.1  0.3 -0.1 0.5;-0.2 0.5 0.2 0.2; 0 0.1 1 0.3; 0.5 0.8 -0.9 0.3];
-W3 = [0.1  0.3 0 1;-0.2 0.5 0.1 1; 1 0 -0.3 1; 0.5 0.6 -0.9 1];
-W4 = [0.1  0.3 -0.1 0.5;-0.2 0.5 1 0.3];
+W1 = w_gen(columns(x),nw1)';
+W2 = w_gen(nw1,nw2)';
+W3 = w_gen(nw2,nw3)';
+W4 = w_gen(nw3,c)';
 yt = Y;
 
 counter =0;
@@ -69,8 +74,9 @@ W1 = W1 - alpha*l1a.gradientW;
 W2 = W2 - alpha*l2a.gradientW;
 W3 = W3 - alpha*l3a.gradientW;
 W4 = W4 - alpha*l4a.gradientW;
-counter =counter +1;
-counter
+
+counter += 1;
+
 end
 X
 y4b
