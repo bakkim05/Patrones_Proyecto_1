@@ -14,6 +14,7 @@ nw2 = 4;#peso capa 2
 nw3 = 4;#peso capa 3
 c=4; #clases
 [X,Y] = create_data(n,c, "vertical");
+val_saved = []
 
 ## Capas:
 l1a=fullyconnected();
@@ -34,8 +35,8 @@ W3 = w_gen(nw2+1,nw3)';
 W4 = w_gen(nw3+1,c)';
 yt = Y;
 
-counter =0;
-while counter < 10000
+counter =1;
+while counter < 15
 y1a=l1a.forward(W1,x);
 y1b=l1b.forward(y1a);
 
@@ -72,16 +73,18 @@ l2a.backward(l2b.gradient);
 l1b.backward(l2a.gradientX(:,2:end));
 l1a.backward(l1b.gradient);
 
-alpha = 0.01; ################################
+alpha = 0.15; ################################
 W1 = W1 - alpha*l1a.gradientW;
 W2 = W2 - alpha*l2a.gradientW;
 W3 = W3 - alpha*l3a.gradientW;
 W4 = W4 - alpha*l4a.gradientW;
-
+val_saved(counter,1) = counter;
+val_saved(counter,2) = error;
 counter += 1;
 
 end
+
 X
 y4b
-
 yt
+val_saved; # <- imprime un vergo de datos no les quite el ";" al menos de que sea con pocas epocas
