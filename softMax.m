@@ -26,8 +26,8 @@ classdef softMax < handle
       if (size(dLds) != size(s.outputs))
         error("backward de softMax no compatible con forward previo");
       endif
-      #localGrad = diag(s.outputs) - (s.outputs.*(s.outputs)');
-      localGrad = s.outputs.*dLds-s.outputs*(s.outputs'*dLds);
+    # localGrad = s.outputs.*dLds-s.outputs*(s.outputs'*dLds);
+      localGrad = s.outputs.*dLds- s.outputs.*dLds*ones(columns(dLds),1)*ones(columns(dLds),1)'.*s.outputs;
       s.gradient = localGrad;
     endfunction
   endmethods
