@@ -15,7 +15,7 @@ clases=5;
 ## T r ai ni n g p a r ame te r s
 nEpochs =2000;
 MLSize=10;
-alpha = 0.26;
+alpha = 0.05;
 bet=0.06;
 
 ## . . .
@@ -73,7 +73,7 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
     RandIndx=randperm(rows(x));
     MLActual=1;
     yEpoca=[];
-    
+    ep
     while MLActual <= nML
     MLIndx=RandIndx((MLActual-1)*s.MLSize+1:min(rows(x),MLActual*s.MLSize));
     MLx=x(MLIndx,:);
@@ -96,7 +96,7 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
   
     y4a=s.l4a.forward(s.W4,y3b);
     y4b=s.l4b.forward(y4a);
-    
+
     yEpoca=[yEpoca;y4b];
     
     error = s.J.error(y4b,MLy);
@@ -135,19 +135,14 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
     #[s.W2,s.v2,s.s2]=adam(s.alpha,s.W2,s.l2a.gradientW,s.v2,s.s2);
     #[s.W3,s.v3,s.s3]=adam(s.alpha,s.W3,s.l3a.gradientW,s.v3,s.s3);
     #[s.W4,s.v4,s.s4]=adam(s.alpha,s.W4,s.l4a.gradientW,s.v4,s.s4);
-    
     MLActual+=1;
-    end
+    endwhile
   
  
+ 
 ################################# 
-    errorEpoca = J.error(yEpoca,yt(RandIndx,:)); 
-    
-    if error<0.03
-      ep
-      errorEpoca
-      break
-    end
+    errorEpoca = s.J.error(yEpoca,yt(RandIndx,:)); 
+    errorEpoca
 ##################################  
 
   end
