@@ -14,8 +14,7 @@ classdef xent < handle
     endfunction
 
     function y=error(s,pnet,ytrain)
-      s.outputs = sum(-ytrain.*log(pnet),2);
-      #revisar sum(algo,2)
+      s.outputs = sum(sum(-ytrain.*log(pnet),2))/rows(ytrain);
       y=s.outputs;
       s.gradient = pnet-ytrain;
     endfunction
