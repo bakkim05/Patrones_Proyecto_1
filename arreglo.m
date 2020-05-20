@@ -9,7 +9,7 @@
 pkg load specfun;
 pkg load statistics;
 n=10; #muestras
-nw1 = 10; #peso capa 1
+nw1 = 5; #peso capa 1
 nw2 = 5;#peso capa 2
 nw3 = 5;#peso capa 3
 c=5; #clases
