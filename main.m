@@ -15,6 +15,11 @@ yp=normMatrix(yp);
 
 datosval=400;
 [Xv,Yv] = create_data(datosval,c,forma);
-
+xv = [ones(rows(Xv),1) Xv];
+yv=Yv;
+###########Test#####
+[ypv]=Red.test(xv,yv);
+ypv=normMatrix(ypv);
+####################
 matConf=confusionMatrix();
 matConf.buildMatrix(yt,yp);

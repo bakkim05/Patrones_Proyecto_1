@@ -117,10 +117,7 @@ function [yp,errorMtx]=train ( s,x,yt , valSetX =[] , valSetY =[] )
     error = s.J.error(y4b,MLy);
     gradJ = s.J.gradient;
   ##############QUITAR########
-    if mod(ep,1000)==0
-      ep
-      error
-      end
+
   ################################
   ## Backprop.
   
@@ -157,7 +154,7 @@ function [yp,errorMtx]=train ( s,x,yt , valSetX =[] , valSetY =[] )
  
 ################################# 
     errorEpoca = s.J.error(yEpoca,yt(RandIndx,:));
-    errXepoc = [errXepoc;[ep,errorEpoca]]
+    errXepoc = [errXepoc;[ep,errorEpoca]];
     if mod(ep,50)==0
       ep
       errorEpoca
@@ -177,9 +174,31 @@ endfunction
 
 
 
-function y=test (s,X)
+function yv4b=test (s,Xv,yv)
 ## P r e d i c c i ´on con modelo p r e e n t r e n a d o
 ## . . .
+    yv1a=s.l1a.forward(s.W1,Xv);
+    yv1b=s.l1b.forward(yv1a);
+  
+    yv1b=[ones(rows(yv1b),1) yv1b];
+  
+    yv2a=s.l2a.forward(s.W2,yv1b);
+    yv2b=s.l2b.forward(yv2a);
+  
+    yv2b=[ones(rows(yv2b),1) yv2b];
+  
+    yv3a=s.l3a.forward(s.W3,yv2b);
+    yv3b=s.l3b.forward(yv3a);
+  
+    yv3b=[ones(rows(yv3b),1) yv3b];
+  
+    yv4a=s.l4a.forward(s.W4,yv3b);
+    yv4b=s.l4b.forward(yv4a);
+
+    error = s.J.error(yv4b,yv);
+
+
+
 endfunction
 
 
