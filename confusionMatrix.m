@@ -15,17 +15,17 @@ classdef confusionMatrix < handle
     endfunction
 
     function y=recall(s)
-      s.rec = diag(s.matc)'./sum(s.matc,1);
+      s.rec = diag(s.matc)./sum(s.matc,2);
       y=s.rec;
     endfunction
     
     function y=precision(s)
-      s.pre = diag(s.matc)./sum(s.matc,2);
+      s.pre = (diag(s.matc)'./sum(s.matc,1))';
       y=s.pre;
     endfunction
     
     function y=fone(s)
-      s.yfone = 2*(s.pre*s.rec)/(s.pre+s.rec);
+      s.yfone = 2*(s.pre.*s.rec)./(s.pre+s.rec);
       y=s.yfone;
     endfunction
  
