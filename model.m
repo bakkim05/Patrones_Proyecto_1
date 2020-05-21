@@ -14,8 +14,8 @@ clases=5;
 ## . . .
 ## T r ai ni n g p a r ame te r s
 nEpochs =2000;
-miniBatch =100;
-alpha = 0.26;
+MLSize=10;
+alpha = 0.05;
 bet=0.06;
 
 ## . . .
@@ -52,6 +52,10 @@ s.W1 = w_gen((s.numInputs)+1,s.hiddenNeurons1)';
 s.W2 = w_gen(s.hiddenNeurons1+1,s.hiddenNeurons2)';
 s.W3 = w_gen(s.hiddenNeurons2+1,s.hiddenNeurons3)';
 s.W4 = w_gen(s.hiddenNeurons3+1,s.clases)';
+
+
+
+
 endfunction
 function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
 ## Entrene e l modelo
@@ -62,8 +66,20 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
 ## l o s s l o g : p r o t o c ol o con p´e r di d a por ´e poca , para s e t de
 ## en t ren amien t o y opci on almen te e l s e t de v a l i d a c i ´on
 ## . . .
+
+    n=rows(x)
+    nML=ceil(n/s.MLSize);
   for ep=1:s.nEpochs
-    y1a=s.l1a.forward(s.W1,x);
+    RandIndx=randperm(rows(x));
+    MLActual=1;
+    yEpoca=[];
+    ep
+    while MLActual <= nML
+    MLIndx=RandIndx((MLActual-1)*s.MLSize+1:min(rows(x),MLActual*s.MLSize));
+    MLx=x(MLIndx,:);
+    MLy=yt(MLIndx,:);
+    
+    y1a=s.l1a.forward(s.W1,MLx);
     y1b=s.l1b.forward(y1a);
   
     y1b=[ones(rows(y1b),1) y1b];
@@ -80,9 +96,10 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
   
     y4a=s.l4a.forward(s.W4,y3b);
     y4b=s.l4b.forward(y4a);
-  
+
+    yEpoca=[yEpoca;y4b];
     
-    error = s.J.error(y4b,yt);
+    error = s.J.error(y4b,MLy);
     gradJ = s.J.gradient;
   ##############QUITAR########
     if mod(ep,1000)==0
@@ -118,23 +135,29 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
     #[s.W2,s.v2,s.s2]=adam(s.alpha,s.W2,s.l2a.gradientW,s.v2,s.s2);
     #[s.W3,s.v3,s.s3]=adam(s.alpha,s.W3,s.l3a.gradientW,s.v3,s.s3);
     #[s.W4,s.v4,s.s4]=adam(s.alpha,s.W4,s.l4a.gradientW,s.v4,s.s4);
+    MLActual+=1;
+    endwhile
   
  
-#################################  
-    if error<0.03
-      ep
-      error
-      break
-    end
+ 
+################################# 
+    errorEpoca = s.J.error(yEpoca,yt(RandIndx,:)); 
+    errorEpoca
 ##################################  
 
   end
-  yp=y4b;
+  yp=yEpoca;
 endfunction
+
+
+
 function y=test (s,X)
 ## P r e d i c c i ´on con modelo p r e e n t r e n a d o
 ## . . .
 endfunction
+
+
+
 function save (s,file)
 ## Trucos para s a l v a r l a s m a t ri c e s
 #W1 = s.W1;
