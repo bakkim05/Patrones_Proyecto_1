@@ -6,9 +6,9 @@ classdef model < handle
 properties
 ## Constantes:
 numInputs=2;
-hiddenNeurons1 =10;
-hiddenNeurons2 =6;
-hiddenNeurons3 =5;
+hiddenNeurons1 =16;
+hiddenNeurons2 =16;
+hiddenNeurons3 =16;
 clases=5;
 
 ## ...
@@ -158,13 +158,9 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
 ################################# 
     errorEpoca = s.J.error(yEpoca,yt(RandIndx,:));
     s.errXepoc = [s.errXepoc;[ep errorEpoca]];
-    if mod(ep,50)==0
-      ep
-      errorEpoca
-    end
+    ep
+    errorEpoca
     if errorEpoca<0.03
-      ep
-      errorEpoca
       break
     end
 ##################################  
