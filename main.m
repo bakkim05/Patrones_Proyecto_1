@@ -19,6 +19,7 @@ xv = [ones(rows(Xv),1) Xv];
 yv=Yv;
 ###########Test#####
 [ypv]=Red.test(xv,yv);
+errorval = Red.J.error(ypv,yv);
 ypv=normMatrix(ypv);
 ####################
 matConf=confusionMatrix();

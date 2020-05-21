@@ -11,6 +11,8 @@ classdef confusionMatrix < handle
     fn=[];
     fp=[];
     tp=[];
+    pre=0;
+    rec=0;
   endproperties
  
   methods
@@ -28,14 +30,16 @@ classdef confusionMatrix < handle
 
     function y=recall(s)
       y = s.tp/(s.tp+s.fn)
+      s.rec=y;
     endfunction
     
     function y=precision(s)
       y = s.tp/(s.tp+s.fp)
+      s.pre=y;
     endfunction
     
     function y=fone(s)
-      y = 2*(s.tp*s.fp)/(s.tp+s.fp)
+      y = 2*(s.pre*s.rec)/(s.pre+s.rec)
     endfunction
  
   endmethods

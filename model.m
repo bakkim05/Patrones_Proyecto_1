@@ -174,7 +174,7 @@ endfunction
 
 
 
-function yv4b=test (s,Xv,yv)
+function yv4b=test (s,Xv)
 ## P r e d i c c i ´on con modelo p r e e n t r e n a d o
 ## . . .
     yv1a=s.l1a.forward(s.W1,Xv);
@@ -195,7 +195,7 @@ function yv4b=test (s,Xv,yv)
     yv4a=s.l4a.forward(s.W4,yv3b);
     yv4b=s.l4b.forward(yv4a);
 
-    error = s.J.error(yv4b,yv);
+    
 
 
 
