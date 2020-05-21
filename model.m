@@ -21,17 +21,17 @@ bet=0.06;
 ## . . .
 ## Capas :
 l1a=fullyconnected();
-l1b=leaky();
+l1b=sigmoide();
 l2a=fullyconnected();
-l2b=leaky();
+l2b=sigmoide();
 l3a=fullyconnected();
-l3b=leaky();
+l3b=sigmoide();
 l4a=fullyconnected();
-#l4b=sigmoide();
-l4b=softMax();
+l4b=sigmoide();
+#l4b=softMax();
 
-#J = mse();
-J = xent();
+J = mse();
+#J = xent();
 
 
 ## DATA
@@ -81,7 +81,7 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
     RandIndx=randperm(rows(x));
     MLActual=1;
     yEpoca=[];
-    ep
+    
     while MLActual <= nML
     MLIndx=RandIndx((MLActual-1)*s.MLSize+1:min(rows(x),MLActual*s.MLSize));
     MLx=x(MLIndx,:);
@@ -109,11 +109,7 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
     
     error = s.J.error(y4b,MLy);
     gradJ = s.J.gradient;
-  ##############QUITAR########
-    if mod(ep,1000)==0
-      ep
-      error
-      end
+
   ################################
   ## Backprop.
   
@@ -150,7 +146,16 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
  
 ################################# 
     errorEpoca = s.J.error(yEpoca,yt(RandIndx,:)); 
-    errorEpoca
+    
+    if mod(ep,100)==0
+         ep
+         errorEpoca
+    end
+    if errorEpoca <0.001
+         ep
+         errorEpoca
+         break
+    end
 ##################################  
 
   end
