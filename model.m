@@ -27,11 +27,11 @@ l2b=leaky();
 l3a=fullyconnected();
 l3b=leaky();
 l4a=fullyconnected();
-l4b=sigmoide();
-#l4b=softMax();
+#l4b=sigmoide();
+l4b=softMax();
 
-J = mse();
-#J = xent();
+#J = mse();
+J = xent();
 
 
 ## DATA
@@ -39,6 +39,14 @@ W1 = [];
 W2 = [];
 W3 = [];
 W4 = [];
+v1 = 0;
+v2 = 0;
+v3 = 0;
+v4 = 0;
+s1 = 0;
+s2 = 0;
+s3 = 0;
+s4 = 0;
 
 endproperties
 methods
@@ -121,20 +129,20 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
     s.l1b.backward(s.l2a.gradientX(:,2:end));
     s.l1a.backward(s.l1b.gradient);
   
-    s.W1 = s.W1 - s.alpha*s.l1a.gradientW;
-    s.W2 = s.W2 - s.alpha*s.l2a.gradientW;
-    s.W3 = s.W3 - s.alpha*s.l3a.gradientW;
-    s.W4 = s.W4 - s.alpha*s.l4a.gradientW;
+##    s.W1 = s.W1 - s.alpha*s.l1a.gradientW;
+##    s.W2 = s.W2 - s.alpha*s.l2a.gradientW;
+##    s.W3 = s.W3 - s.alpha*s.l3a.gradientW;
+##    s.W4 = s.W4 - s.alpha*s.l4a.gradientW;
   
     #[s.v1,s.W1]=momentum(s.v1,s.W1,s.l1a.gradientW,s.alpha,s.bet);
     #[s.v2,s.W2]=momentum(s.v2,s.W2,s.l2a.gradientW,s.alpha,s.bet);
     #[s.v3,s.W3]=momentum(s.v3,s.W3,s.l3a.gradientW,s.alpha,s.bet);
     #[s.v4,s.W4]=momentum(s.v4,s.W4,s.l4a.gradientW,s.alpha,s.bet);
   
-    #[s.W1,s.v1,s.s1]=adam(s.alpha,s.W1,s.l1a.gradientW,s.v1,s.s1);
-    #[s.W2,s.v2,s.s2]=adam(s.alpha,s.W2,s.l2a.gradientW,s.v2,s.s2);
-    #[s.W3,s.v3,s.s3]=adam(s.alpha,s.W3,s.l3a.gradientW,s.v3,s.s3);
-    #[s.W4,s.v4,s.s4]=adam(s.alpha,s.W4,s.l4a.gradientW,s.v4,s.s4);
+    [s.W1,s.v1,s.s1]=adam(s.alpha,s.W1,s.l1a.gradientW,s.v1,s.s1);
+    [s.W2,s.v2,s.s2]=adam(s.alpha,s.W2,s.l2a.gradientW,s.v2,s.s2);
+    [s.W3,s.v3,s.s3]=adam(s.alpha,s.W3,s.l3a.gradientW,s.v3,s.s3);
+    [s.W4,s.v4,s.s4]=adam(s.alpha,s.W4,s.l4a.gradientW,s.v4,s.s4);
     MLActual+=1;
     endwhile
   
@@ -146,7 +154,7 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
 ##################################  
 
   end
-  yp=yEpoca;
+  yp(RandIndx,:)=yEpoca;
 endfunction
 
 

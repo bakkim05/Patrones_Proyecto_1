@@ -2,7 +2,7 @@
 pkg load specfun;
 pkg load statistics;
 clear;
-n=1000; #muestras
+n=4000; #muestras
 c=5; #clases
 [X,Y] = create_data(n,c, "pie");
 x = [ones(rows(X),1) X];
