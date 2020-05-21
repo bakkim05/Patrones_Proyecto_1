@@ -1,16 +1,16 @@
 ## Copyright (C) 2020 Oscar Arias, Jung Bak, Hamlet Loria, Daniel Rojas
 ##
 ## Este archivo forma parte del material del Proyecto 1 del curso:
-## EL5852 Introducción al Reconocimiento de Patrones
-## Escuela de Ingenierí­a Electrónica
-## Tecnológico de Costa Rica
+## EL5852 IntroducciÃ³n al Reconocimiento de Patrones
+## Escuela de IngenierÃ­Â­a ElectrÃ³nica
+## TecnolÃ³gico de Costa Rica
 ## 
 ## This class generates an object utilized for the activation function of Sigmoid.
 classdef sigmoide < handle
   properties    
-    ## Result of the forward propagation
+    ## Results
     outputs=[];
-    ## Result of the backward propagation
+    ## Function gradient
     gradient=[];
   endproperties
 
