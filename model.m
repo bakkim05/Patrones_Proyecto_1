@@ -1,8 +1,14 @@
-classdef model < handle
-## Modelo
+## Copyright (C) 2020 Oscar Arias, Jung Bak, Hamlet Loria, Daniel Rojas
 ##
-## Esta clase encapsula una red neuronal, con métodos para
-## almacenar, cargar, entrenar y predecir.
+## Este archivo forma parte del material del Proyecto 1 del curso:
+## EL5852 Introducción al Reconocimiento de Patrones
+## Escuela de Ingenierí­a Electrónica
+## Tecnológico de Costa Rica
+## 
+## This class encapsulates the neural network as an object
+
+classdef model < handle
+
 properties
 ## Constantes:
 numInputs=2;
@@ -61,9 +67,13 @@ s4=0;
 
 endproperties
 methods
+     
+ 
 function s=model ()
 s.init()
 endfunction
+
+
 function init (s)
 ## I n i c i a l i c e e l modelo con v a l o r e s a l a z a r
 ## . . .
@@ -71,20 +81,35 @@ s.W1 = w_gen((s.numInputs)+1,s.hiddenNeurons1)';
 s.W2 = w_gen(s.hiddenNeurons1+1,s.hiddenNeurons2)';
 s.W3 = w_gen(s.hiddenNeurons2+1,s.hiddenNeurons3)';
 s.W4 = w_gen(s.hiddenNeurons3+1,s.clases)';
-
-
-
-
 endfunction
+
+
+## usage [yp]=train (s,x,yt)
+## 
+## Trains the neural network
+##
+## Inputs:
+##   s: self
+##   x: Design matrix
+##   yt: Training output
+##   valSetX: validation set for inputs
+##   valSetY: validation set for outputs
+##
+## Outputs:
+##   yp: best prediction of the neural network
 function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
-## Entrene el modelo
-## X: matriz de dise˜no (datos de entrenamiento en filas)
-## y : matriz de salida, cada fila codificada one?hot
-## valSetX : set de validación (opcional) (entradas en filas)
-## valSetY : set de validación (opcional) (salidas en filas)
-## loss log : protocolo con pérdida por época, para set de
-## entrenamiento y opción almente el set de validación
-## . . .
+     
+## usage yv4b=test(s,Xv)
+## 
+## Tests the neural network
+##
+## Inputs:
+##   s: self
+##   Xv: Validation inputs
+##
+## Outputs:
+##   yv4b: Aproximations made by the neural network utilizing the validation inputs.     
+
     n=rows(x)
     nML=ceil(n/s.MLSize);
   for ep=1:s.nEpochs
@@ -174,8 +199,7 @@ endfunction
 
 
 function yv4b=test (s,Xv)
-## P r e d i c c i ´on con modelo p r e e n t r e n a d o
-## . . .
+
     yv1a=s.l1a.forward(s.W1,Xv);
     yv1b=s.l1b.forward(yv1a);
   
@@ -193,15 +217,16 @@ function yv4b=test (s,Xv)
   
     yv4a=s.l4a.forward(s.W4,yv3b);
     yv4b=s.l4b.forward(yv4a);
-
-    
-
-
-
 endfunction
 
 
-
+## usage save (s,file)
+## 
+## Saves the neural network
+##
+## Inputs:
+##   s: self
+##   file: Destination file
 function save (s,file)
 ## Trucos para s a l v a r l a s m a t ri c e s
 #W1 = s.W1;
@@ -213,9 +238,19 @@ W2 = w_gen(hiddenNeurons1+1,hiddenNeurons2)';
 W3 = w_gen(hiddenNeurons2+1,hiddenNeurons3)';
 W4 = w_gen(hiddenNeurons3+1,clases)';
 endfunction
+
+## o=load (s,file)
+## 
+## Loads the neural network
+##
+## Inputs:
+##   s: self
+##   file: Extraction file
+##
+## Outputs:
+##   o: loads the weights and parameters of the loaded neural network 
 function o=load (s,file)
-## Cargue l a s m a t ri c e s s al v a d a s a n t e ri o rm e n t e y a s e g u r e c o n s i s t e n c i a
-## de para metros
+
 load (file) ;
 s.W1=W1;
 s.W2=W2;
