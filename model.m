@@ -1,30 +1,36 @@
 classdef model < handle
 ## Modelo
 ##
-## Esta c l a s e e n c a p s ul a una red neu r on al , con m´e t od o s para
-## almacenar , c a r g a r , e n t r e n a r y p r e d e c i r .
+## Esta clase encapsula una red neuronal, con métodos para
+## almacenar, cargar, entrenar y predecir.
 properties
-## C on s t an te s :
+## Constantes:
 numInputs=2;
 hiddenNeurons1 =10;
 hiddenNeurons2 =6;
 hiddenNeurons3 =5;
 clases=5;
 
-## . . .
-## T r ai ni n g p a r ame te r s
+## ...
+## Training parameters
 nEpochs =2000;
 MLSize=10;
 alpha = 0.05;
 bet=0.06;
 
-## . . .
+## ...
 ## Capas :
 l1a=fullyconnected();
+##l1b=sigmoide();
+##l1b=ReLU();
 l1b=leaky();
 l2a=fullyconnected();
+##l2b=sigmoide();
+##l2b=ReLU();
 l2b=leaky();
 l3a=fullyconnected();
+##l3b=sigmoide();
+##l3b=ReLU();
 l3b=leaky();
 l4a=fullyconnected();
 l4b=sigmoide();
@@ -39,6 +45,15 @@ W1 = [];
 W2 = [];
 W3 = [];
 W4 = [];
+
+v1=0;
+v2=0;
+v3=0;
+v4=0;
+s1=0;
+s2=0;
+s3=0;
+s4=0;
 
 endproperties
 methods
@@ -58,13 +73,13 @@ s.W4 = w_gen(s.hiddenNeurons3+1,s.clases)';
 
 endfunction
 function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
-## Entrene e l modelo
-## X: m a t riz de d i s e ˜no ( d a t o s de en t ren amien t o en f i l a s )
-## y : m a t riz de s ali d a , cada f i l a c o d i f i c a d a one?hot
-## valSetX : s e t de v a l i d a c i ´on ( o p ci o n al ) ( e n t r a d a s en f i l a s )
-## valSetY : s e t de v a l i d a c i ´on ( o p ci o n al ) ( s a l i d a s en f i l a s )
-## l o s s l o g : p r o t o c ol o con p´e r di d a por ´e poca , para s e t de
-## en t ren amien t o y opci on almen te e l s e t de v a l i d a c i ´on
+## Entrene el modelo
+## X: matriz de dise˜no (datos de entrenamiento en filas)
+## y : matriz de salida, cada fila codificada one?hot
+## valSetX : set de validación (opcional) (entradas en filas)
+## valSetY : set de validación (opcional) (salidas en filas)
+## loss log : protocolo con pérdida por época, para set de
+## entrenamiento y opción almente el set de validación
 ## . . .
 
     n=rows(x)
@@ -73,7 +88,7 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
     RandIndx=randperm(rows(x));
     MLActual=1;
     yEpoca=[];
-    ep
+    
     while MLActual <= nML
     MLIndx=RandIndx((MLActual-1)*s.MLSize+1:min(rows(x),MLActual*s.MLSize));
     MLx=x(MLIndx,:);
@@ -142,11 +157,21 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
  
 ################################# 
     errorEpoca = s.J.error(yEpoca,yt(RandIndx,:)); 
-    errorEpoca
+    if mod(ep,50)==0
+      ep
+      errorEpoca
+    end
+    if errorEpoca<0.015
+      ep
+      errorEpoca
+      break
+    end
 ##################################  
 
-  end
-  yp=yEpoca;
+end
+  ep
+  errorEpoca
+  yp(RandIndx,:)=yEpoca;
 endfunction
 
 
