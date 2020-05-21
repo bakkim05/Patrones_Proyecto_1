@@ -1,9 +1,9 @@
 ## Copyright (C) 2020 Oscar Arias, Jung Bak, Hamlet Loria, Daniel Rojas
 ##
 ## Este archivo forma parte del material del Proyecto 1 del curso:
-## EL5852 Introducción al Reconocimiento de Patrones
-## Escuela de Ingenierí­a Electrónica
-## Tecnológico de Costa Rica
+## EL5852 IntroducciÃ³n al Reconocimiento de Patrones
+## Escuela de IngenierÃ­Â­a ElectrÃ³nica
+## TecnolÃ³gico de Costa Rica
 ## 
 ## This class generates an object that contains the confusion matrix.
 classdef confusionMatrix < handle
@@ -23,8 +23,8 @@ classdef confusionMatrix < handle
     ##
     ## Inputs:
     ##   s: self
-    ##   yt: 
-    ##   ynet: 
+    ##   yt: expected values matrix (actual values)
+    ##   ynet: predicted values matrix
     ##
     ## Outputs:
     ##   y: confusion matrix
@@ -40,7 +40,7 @@ classdef confusionMatrix < handle
     ## Inputs:
     ##   s: self
     ##
-    ## Outputs:
+    ## Outputs: recall vector (n classes)
     ##   y: recall of the confusion matrix
     function y=recall(s)
       s.rec = diag(s.matc)./sum(s.matc,2);
@@ -49,12 +49,12 @@ classdef confusionMatrix < handle
     
     ## usage y=precision(s)
     ## 
-    ## Calculates the Presicion of the confusion matrix
+    ## Calculates the presicion of the confusion matrix
     ##
     ## Inputs:
     ##   s: self
     ##
-    ## Outputs:
+    ## Outputs: presicion vector (n classes)
     ##   y: Presicion of the confucion matrix
     function y=precision(s)
       s.pre = (diag(s.matc)'./sum(s.matc,1))';
@@ -68,7 +68,7 @@ classdef confusionMatrix < handle
     ## Inputs:
     ##   s: self
     ##
-    ## Outputs:
+    ## Outputs: F1 score vector (n classes)
     ##   y: F1 value of the confusion matrix
     function y=fone(s)
       s.yfone = 2*(s.pre.*s.rec)./(s.pre+s.rec);
