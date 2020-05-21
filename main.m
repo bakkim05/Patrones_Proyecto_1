@@ -1,18 +1,29 @@
+## Copyright (C) 2020 Oscar Arias, Jung Bak, Hamlet Loria, Daniel Rojas
+##
+## Este archivo forma parte del material del Proyecto 1 del curso:
+## EL5852 Introducción al Reconocimiento de Patrones
+## Escuela de Ingenierí­a Electrónica
+## Tecnológico de Costa Rica
+## 
+## This class execute the creation, training and validation phases of a neural network.
+
 1;
 pkg load specfun;
 pkg load statistics;
 clear;
+
 n=1000; #muestras
 c=5; #clases
 forma='curved';
+datosval=400;
+
 [X,Y] = create_data(n,c, forma);
 x = [ones(rows(X),1) X];
 yt = Y;
-Red=model();
+Red=model(c);
 [yp]=Red.train(x,yt);
 yp=normMatrix(yp);
 
-datosval=400;
 [Xv,Yv] = create_data(datosval,c,forma);
 xv = [ones(rows(Xv),1) Xv];
 yv=Yv;

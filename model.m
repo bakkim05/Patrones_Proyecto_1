@@ -69,8 +69,9 @@ endproperties
 methods
      
  
-function s=model ()
+function s=model (c)
 s.init()
+s.clases=c;
 endfunction
 
 
