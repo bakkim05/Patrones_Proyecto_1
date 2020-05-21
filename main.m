@@ -56,3 +56,11 @@ blueChnl  = reshape(cwimg(3,:),size(GX));
 
 mixed = flip(cat(3,redChnl,greenChnl,blueChnl),1);
 imshow(mixed);
+
+figure(4,"name","Error vs Época")
+plot(Red.errXepoc(:,1),Red.errXepoc(:,2));
+
+
+
+
+

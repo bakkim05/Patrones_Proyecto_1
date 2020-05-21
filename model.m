@@ -15,8 +15,12 @@ clases=5;
 ## Training parameters
 nEpochs =2000;
 MLSize=10;
-alpha = 0.05;
+alpha = 0.01;
 bet=0.06;
+
+##
+errXepoc=[];
+##
 
 ## ...
 ## Capas :
@@ -72,7 +76,7 @@ s.W4 = w_gen(s.hiddenNeurons3+1,s.clases)';
 
 
 endfunction
-function [yp,errorMtx]=train ( s,x,yt , valSetX =[] , valSetY =[] )
+function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
 ## Entrene el modelo
 ## X: matriz de dise˜no (datos de entrenamiento en filas)
 ## y : matriz de salida, cada fila codificada one?hot
@@ -81,7 +85,6 @@ function [yp,errorMtx]=train ( s,x,yt , valSetX =[] , valSetY =[] )
 ## loss log : protocolo con pérdida por época, para set de
 ## entrenamiento y opción almente el set de validación
 ## . . .
-    errXepoc=[];
     n=rows(x)
     nML=ceil(n/s.MLSize);
   for ep=1:s.nEpochs
@@ -154,7 +157,7 @@ function [yp,errorMtx]=train ( s,x,yt , valSetX =[] , valSetY =[] )
  
 ################################# 
     errorEpoca = s.J.error(yEpoca,yt(RandIndx,:));
-    errXepoc = [errXepoc;[ep,errorEpoca]];
+    s.errXepoc = [s.errXepoc;[ep errorEpoca]];
     if mod(ep,50)==0
       ep
       errorEpoca
