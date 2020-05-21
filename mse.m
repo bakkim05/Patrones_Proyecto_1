@@ -10,13 +10,15 @@
 
 classdef mse < handle
   properties    
+    ## Calculated error from the loss function MSE.
     outputs=[];
+    ## Gradient needed for proper backward propagation.
     gradient=[];
   endproperties
 
   methods
     ## This functions generates the object Mean Squared Error.
-    function s=mse()
+    function s=mse()    
       s.outputs=[];
       s.gradient=[];
     endfunction

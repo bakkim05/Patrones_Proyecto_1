@@ -8,9 +8,9 @@
 ## This class generates an object utilized for the activation function of Sigmoid.
 classdef sigmoide < handle
   properties    
-    ## Resultados después de la propagación hacia adelante
+    ## Result of the forward propagation
     outputs=[];
-    ## Resultados después de la propagación hacia atrás
+    ## Result of the backward propagation
     gradient=[];
   endproperties
 

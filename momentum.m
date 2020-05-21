@@ -22,9 +22,8 @@
 ##   wr: new weight for the artificial neural network
 
     function [vr,wr]=momentum(v,w,gradW,alpha=0.15,bet=0.56)
-      
+      #New v calculation given current v and "gradiente".
       vr = bet*v + (1-bet)*gradW;
-      
+      #New weight calculation given previous weights and v.
       wr = w - alpha*vr;
-      
     endfunction

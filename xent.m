@@ -10,7 +10,9 @@
 
 classdef xent < handle
   properties    
+    ## Error calculated using Cross Entropy
     outputs=[];
+    ## Gradient needed for proper backward propagation.
     gradient=[];
   endproperties
 
