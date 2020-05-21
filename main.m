@@ -4,7 +4,7 @@ pkg load statistics;
 clear;
 n=1000; #muestras
 c=5; #clases
-forma='pie';
+forma='curved';
 [X,Y] = create_data(n,c, forma);
 x = [ones(rows(X),1) X];
 yt = Y;
@@ -45,3 +45,14 @@ winner=flip(uint8(reshape(maxk(1:end-1),size(GX))),1);
 cmap = [0,0,0; 1,0,0; 0,1,0; 0,0,1; 0.5,0,0.5; 0,0.5,0.5; 0.5,0.5,0.0];
 wimg=ind2rgb(winner,cmap);
 imshow(wimg);
+
+
+figure(3,"name","Winner Blurry");
+ccmap = cmap(2:1+c,:);
+cwimg = ccmap'*FZ(1:end-1,:)';
+redChnl   = reshape(cwimg(1,:),size(GX));
+greenChnl = reshape(cwimg(2,:),size(GX));
+blueChnl  = reshape(cwimg(3,:),size(GX));
+
+mixed = flip(cat(3,redChnl,greenChnl,blueChnl),1);
+imshow(mixed);
