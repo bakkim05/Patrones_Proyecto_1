@@ -1,45 +1,32 @@
 
 classdef confusionMatrix < handle
   
-  properties    
-
-    predictedTrue=[];
-    predictedFalse=[];
-    actualTrue=[];
-    actualFalse=[];
-    tn=[];
-    fn=[];
-    fp=[];
-    tp=[];
+  properties
+    matc=[];
     pre=0;
     rec=0;
+    yfone=0;
   endproperties
  
   methods
     function y=buildMatrix(s,yt,ynet)
-      s.predictedTrue=nnz(ynet);
-      s.predictedFalse=numel(ynet)-nnz(ynet);
-      s.actualTrue=nnz(yt);
-      s.actualFalse=numel(yt)- nnz(yt);
-      s.tp=nnz(yt.*ynet);
-      s.fn=s.actualTrue-s.tp;
-      s.tn=s.predictedFalse-s.fn;
-      s.fp=s.actualFalse-s.tn;
-      y=[numel(yt) s.predictedFalse s.predictedTrue; s.actualFalse s.tn s.fp; s.actualTrue s.fn s.tp];
+    s.matc=yt'*ynet;
+    y=s.matc;    
     endfunction
 
     function y=recall(s)
-      y = s.tp/(s.tp+s.fn)
-      s.rec=y;
+      s.rec = diag(s.matc)'./sum(s.matc,1);
+      y=s.rec;
     endfunction
     
     function y=precision(s)
-      y = s.tp/(s.tp+s.fp)
-      s.pre=y;
+      s.pre = diag(s.matc)./sum(s.matc,2);
+      y=s.pre;
     endfunction
     
     function y=fone(s)
-      y = 2*(s.pre*s.rec)/(s.pre+s.rec)
+      s.yfone = 2*(s.pre*s.rec)/(s.pre+s.rec);
+      y=s.yfone;
     endfunction
  
   endmethods
