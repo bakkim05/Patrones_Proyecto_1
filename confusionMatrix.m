@@ -27,11 +27,15 @@ classdef confusionMatrix < handle
     endfunction
 
     function y=recall(s)
-      s.tp/(s.tp+s.fn)
+      y = s.tp/(s.tp+s.fn)
     endfunction
     
     function y=precision(s)
-      s.tp/(s.tp+s.fp)
+      y = s.tp/(s.tp+s.fp)
+    endfunction
+    
+    function y=fone(s)
+      y = 2*(s.tp*s.fp)/(s.tp+s.fp)
     endfunction
  
   endmethods
