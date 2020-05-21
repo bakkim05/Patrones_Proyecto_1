@@ -24,3 +24,24 @@ ypv=normMatrix(ypv);
 ####################
 matConf=confusionMatrix();
 matConf.buildMatrix(yt,yp);
+matConf.recall();
+matConf.precision();
+matConf.fone();
+
+
+plot_data(X,Y)
+figSpace = linspace(-1,1,256);
+[GX,GY] = meshgrid(figSpace,figSpace);
+FX = [ones(size(GX(:)),1) GX(:) GY(:)];
+FZ = Red.test(FX);
+FZ = [FZ; ones(1,columns(FZ))-sum(FZ)]; ## Append the last probability
+
+## A figure with the winners
+[maxprob,maxk]=max(FZ,[],2);
+
+figure(2,"name","Winner classes");
+
+winner=flip(uint8(reshape(maxk(1:end-1),size(GX))),1);
+cmap = [0,0,0; 1,0,0; 0,1,0; 0,0,1; 0.5,0,0.5; 0,0.5,0.5; 0.5,0.5,0.0];
+wimg=ind2rgb(winner,cmap);
+imshow(wimg);
