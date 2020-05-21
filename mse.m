@@ -16,7 +16,7 @@ classdef mse < handle
     function y=error(s,ynet,ytrain)
       s.outputs = norm((ynet-ytrain),'fro')^2/(rows(ytrain));
       y=s.outputs;
-      s.gradient = (2*((ynet-ytrain))/(rows(ytrain));
+      s.gradient = (2*((ynet-ytrain))/(rows(ytrain)));
     endfunction
 
   endmethods
