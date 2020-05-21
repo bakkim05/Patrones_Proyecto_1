@@ -138,15 +138,15 @@ function [yp,errorMtx]=train ( s,x,yt , valSetX =[] , valSetY =[] )
     #s.W3 = s.W3 - s.alpha*s.l3a.gradientW;
     #s.W4 = s.W4 - s.alpha*s.l4a.gradientW;
   
-    #[s.v1,s.W1]=momentum(s.v1,s.W1,s.l1a.gradientW,s.alpha,s.bet);
-    #[s.v2,s.W2]=momentum(s.v2,s.W2,s.l2a.gradientW,s.alpha,s.bet);
-    #[s.v3,s.W3]=momentum(s.v3,s.W3,s.l3a.gradientW,s.alpha,s.bet);
-    #[s.v4,s.W4]=momentum(s.v4,s.W4,s.l4a.gradientW,s.alpha,s.bet);
+    [s.v1,s.W1]=momentum(s.v1,s.W1,s.l1a.gradientW,s.alpha,s.bet);
+    [s.v2,s.W2]=momentum(s.v2,s.W2,s.l2a.gradientW,s.alpha,s.bet);
+    [s.v3,s.W3]=momentum(s.v3,s.W3,s.l3a.gradientW,s.alpha,s.bet);
+    [s.v4,s.W4]=momentum(s.v4,s.W4,s.l4a.gradientW,s.alpha,s.bet);
   
-    [s.W1,s.v1,s.s1]=adam(s.alpha,s.W1,s.l1a.gradientW,s.v1,s.s1);
-    [s.W2,s.v2,s.s2]=adam(s.alpha,s.W2,s.l2a.gradientW,s.v2,s.s2);
-    [s.W3,s.v3,s.s3]=adam(s.alpha,s.W3,s.l3a.gradientW,s.v3,s.s3);
-    [s.W4,s.v4,s.s4]=adam(s.alpha,s.W4,s.l4a.gradientW,s.v4,s.s4);
+    #[s.W1,s.v1,s.s1]=adam(s.alpha,s.W1,s.l1a.gradientW,s.v1,s.s1);
+    #[s.W2,s.v2,s.s2]=adam(s.alpha,s.W2,s.l2a.gradientW,s.v2,s.s2);
+    #[s.W3,s.v3,s.s3]=adam(s.alpha,s.W3,s.l3a.gradientW,s.v3,s.s3);
+    #[s.W4,s.v4,s.s4]=adam(s.alpha,s.W4,s.l4a.gradientW,s.v4,s.s4);
     MLActual+=1;
     endwhile
   
@@ -159,7 +159,7 @@ function [yp,errorMtx]=train ( s,x,yt , valSetX =[] , valSetY =[] )
       ep
       errorEpoca
     end
-    if errorEpoca<0.015
+    if errorEpoca<0.03
       ep
       errorEpoca
       break
