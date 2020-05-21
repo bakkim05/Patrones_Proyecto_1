@@ -1,17 +1,17 @@
 ## Copyright (C) 2020 Oscar Arias, Jung Bak, Hamlet Loria, Daniel Rojas
 ##
 ## Este archivo forma parte del material del Proyecto 1 del curso:
-## EL5852 Introducci髇 al Reconocimiento de Patrones
-## Escuela de Ingenier憝a Electr髇ica
-## Tecnol骻ico de Costa Rica
+## EL5852 Introducci贸n al Reconocimiento de Patrones
+## Escuela de Ingenier铆a Electr贸nica
+## Tecnol贸gico de Costa Rica
 ## 
 ## This class generates an object utilized for the activation function of Leaky Rectified
 ## Linear Unit (Leaky ReLU).
 classdef leaky < handle
   properties    
-    ## Resultados despu茅s de la propagaci贸n hacia adelante
+    ## Results
     outputs=[];
-    ## Resultados despu茅s de la propagaci贸n hacia atr谩s
+    ## Function gradient
     gradient=[];
     ## Alpha
     alpha=0;
