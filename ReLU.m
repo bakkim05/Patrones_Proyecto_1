@@ -1,6 +1,12 @@
-#!/usr/bin/octave-cli
-
-## "Capa" sigmoide, que aplica la funci贸n log铆stica
+## Copyright (C) 2020 Oscar Arias, Jung Bak, Hamlet Loria, Daniel Rojas
+##
+## Este archivo forma parte del material del Proyecto 1 del curso:
+## EL5852 Introducci髇 al Reconocimiento de Patrones
+## Escuela de Ingenier憝a Electr髇ica
+## Tecnol骻ico de Costa Rica
+## 
+## This class generates an object utilized for the activation function of
+## Rectified Linear Unit (ReLU).
 classdef ReLU < handle
   properties    
     ## Resultados despu茅s de la propagaci贸n hacia adelante
@@ -10,20 +16,35 @@ classdef ReLU < handle
   endproperties
 
   methods
-    ## Constructor ejecuta un forward si se le pasan datos
+    ## This functions generates the object ReLU.
     function s=ReLU()
       s.outputs=[];
       s.gradient=[];
     endfunction
 
-    ## Propagaci贸n hacia adelante
+    ## usage y=forward(s,a)
+    ## 
+    ## This function does the forward propagation for ReLU
+    ##
+    ## Inputs:
+    ##   s: self
+    ##   a: input values for the activation function
+    ##
+    ## Outputs:
+    ##   y: activation value for the activation function
     function y=forward(s,a)
       s.outputs = max(0,a);
       y=s.outputs;
       s.gradient = [];
     endfunction
 
-    ## Propagaci贸n hacia atr谩s recibe dL/ds de siguientes nodos
+    ## usage backward(s,dLds)
+    ## 
+    ## This function does the backward propagation for ReLU
+    ##
+    ## Inputs:
+    ##   s: self
+    ##   dLds: Loss gradient.
     function backward(s,dLds)
       if (size(dLds)!=size(s.outputs))
         error("backward de sigmoide no compatible con forward previo");

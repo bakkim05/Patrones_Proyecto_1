@@ -27,10 +27,10 @@ classdef softMax < handle
     ##
     ## Inputs:
     ##   s: self
-    ##   a: values for the activation function
+    ##   a: input values for the activation function
     ##
     ## Outputs:
-    ##   y: 
+    ##   y: activation value for the activation function
     function y=forward(s,a)
       s.outputs = softMax_Func(a);
       y=s.outputs;
