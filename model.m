@@ -10,56 +10,79 @@
 classdef model < handle
 
 properties
-## Constantes:
+## Neural Network Properties:
+## Number of data's dimensions.
 numInputs=2;
+## Number of neurons per layer.
 hiddenNeurons1 =16;
 hiddenNeurons2 =16;
 hiddenNeurons3 =16;
+## Number of data's clases 
 clases=5;
-
-## ...
-## Training parameters
+## Number of trainig epochs.
 nEpochs =2000;
+## Number of samples per minibatch.
 MLSize=10;
+## Learning ratio.
 alpha = 0.01;
+## inertia parameter.
 bet=0.06;
 
 ##
+## Store error values for each epoch.
 errXepoc=[];
 ##
 
-## ...
-## Capas :
+## Layers.
+## First fully conected layer.
 l1a=fullyconnected();
+
+## First acitvation layer.
 ##l1b=sigmoide();
 ##l1b=ReLU();
 l1b=leaky();
+
+## First fully conected layer.
 l2a=fullyconnected();
+
+## Second acitvation layer.
 ##l2b=sigmoide();
 ##l2b=ReLU();
 l2b=leaky();
+
+## Third fully conected layer.
 l3a=fullyconnected();
+
+## Third acitvation layer.
 ##l3b=sigmoide();
 ##l3b=ReLU();
 l3b=leaky();
+
+## Fourth fully conected layer.
 l4a=fullyconnected();
+
+## Fourth acitvation layer.
 l4b=sigmoide();
 #l4b=softMax();
 
+## Error function layer.
 J = mse();
 #J = xent();
 
 
-## DATA
+## Store weights.
 W1 = [];
 W2 = [];
 W3 = [];
 W4 = [];
 
+## Store v for optimization technique.
 v1=0;
 v2=0;
 v3=0;
 v4=0;
+
+## Store s for optimization technique.
 s1=0;
 s2=0;
 s3=0;
@@ -68,16 +91,14 @@ s4=0;
 endproperties
 methods
      
- 
+## This function generates the object model. 
 function s=model (c)
 s.init()
 s.clases=c;
 endfunction
 
-
+## This function initialize the model's weights with random values.
 function init (s)
-## I n i c i a l i c e e l modelo con v a l o r e s a l a z a r
-## . . .
 s.W1 = w_gen((s.numInputs)+1,s.hiddenNeurons1)';
 s.W2 = w_gen(s.hiddenNeurons1+1,s.hiddenNeurons2)';
 s.W3 = w_gen(s.hiddenNeurons2+1,s.hiddenNeurons3)';
@@ -111,18 +132,22 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
 ## Outputs:
 ##   yv4b: Aproximations made by the neural network utilizing the validation inputs.     
 
+    ## Number of samples.
     n=rows(x)
+    ## Number of minibatches needed.
     nML=ceil(n/s.MLSize);
+    
+    ##Neural network's training.
   for ep=1:s.nEpochs
     RandIndx=randperm(rows(x));
     MLActual=1;
     yEpoca=[];
-    
     while MLActual <= nML
     MLIndx=RandIndx((MLActual-1)*s.MLSize+1:min(rows(x),MLActual*s.MLSize));
     MLx=x(MLIndx,:);
     MLy=yt(MLIndx,:);
     
+    ##Forwardprop.
     y1a=s.l1a.forward(s.W1,MLx);
     y1b=s.l1b.forward(y1a);
   
@@ -145,9 +170,7 @@ function [yp]=train ( s,x,yt , valSetX =[] , valSetY =[] )
     
     error = s.J.error(y4b,MLy);
     gradJ = s.J.gradient;
-  ##############QUITAR########
 
-  ################################
   ## Backprop.
   
     s.l4b.backward(gradJ); # asumiendo que esto es el final
